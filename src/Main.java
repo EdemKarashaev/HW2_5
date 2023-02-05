@@ -3,28 +3,40 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Составляем список покупок, для того чтобы добавить покупку, нажмите 1");
-        System.out.println("Для того чтобы показать весь список покупок, нажмите 2");
-        System.out.println("Для того чтобы удалить покупку из списка, нажмите 3");
-        System.out.println("Для того чтобы найти покупку в списке, нажмите 4");
-        System.out.print("Выберите операцию: \n");
-        ArrayList<String> purchses = new ArrayList<>();
 
+
+public class Main {
+    private static ArrayList<String> purchses=new ArrayList<>();
+
+    public static ArrayList<String> getPurch() {
+        return purchses;
+    }
+    public void setPurch(ArrayList<String> purchses) {
+        this.purchses = purchses;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         //цикл для выбора действий в программе
         do {
-            String scanner = new Scanner(System.in).nextLine();
+            System.out.println("Составляем список покупок, для того чтобы добавить покупку, нажмите 1");
+            System.out.println("Для того чтобы показать весь список покупок, нажмите 2");
+            System.out.println("Для того чтобы удалить покупку из списка, нажмите 3");
+            System.out.println("Для того чтобы найти покупку в списке, нажмите 4");
+            System.out.print("Выберите операцию: \n");
+           String s=scanner.nextLine();
             if (scanner.equals("end")) {
                 break;
             }
-            int intCase = Integer.parseInt(scanner);
+            int intCase = Integer.parseInt(s);
             if (intCase == 1) {
                 System.out.println("Какую покупку хотите добавить?");
-                Scanner scanner2 = new Scanner(System.in);
-                String s2 = scanner2.nextLine();
-                purchses.add(s2);
-                System.out.println("Итого в списке покупок: " + purchses.size());
+                 s = scanner.nextLine();
+               ArrayList b=getPurch();
+               b.add(s);
+
+                System.out.println("Итого в списке покупок: " + getPurch().size());
             } else if (intCase == 2) {
                 System.out.println("Список покупок:");
                 int i = 1;
@@ -38,28 +50,29 @@ public class Main {
                 int k = 0;
                 getPurch(purchses);
                 System.out.print("Какую покупку хотите удалить?");
-                String s3 = new Scanner(System.in).nextLine();
-                if (purchses.remove(s3)) {
-                    purchses.remove(s3);
+                 s = new Scanner(System.in).nextLine();
+                if (purchses.remove(s)) {
+                    purchses.remove(s);
                 } else {
-                    k = Integer.parseInt(s3);
+                    k = Integer.parseInt(s);
                     purchses.remove(k - 1);
                 }
                 getPurch(purchses);
             } else if (intCase == 4) {
                 System.out.print("Введите слово для поиска по списку:");
-                String s3 = new Scanner(System.in).nextLine();
+                 s = new Scanner(System.in).nextLine();
 
                 for (int i = 0; i < purchses.size(); i++) {
-                    String queryLower = s3.toLowerCase(Locale.ROOT);
+                    String queryLower = s.toLowerCase(Locale.ROOT);
                     String itemLower = purchses.get(i).toLowerCase(Locale.ROOT);
 
                     if (itemLower.contains(queryLower)) {
                         System.out.println((i + 1) + ". " + purchses.get(i));
                     }
                 }
-            }
-            System.out.print("Выберите операцию: \n");
+            } else {
+                System.out.println("Нужно вводить правильный номер операции!");
+                break;}
         } while (true);
     }
 
